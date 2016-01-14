@@ -33,7 +33,7 @@ gradle-app.setting
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
 
-*.iml
+#*.iml
 
 ## Directory-based project format:
 #.idea/
