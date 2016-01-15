@@ -26,32 +26,21 @@ public class Main {
         propertyList.add(new ClassProperty("again", String[].class));
         /////////////////////////////////////////////////////////
 
+        TypeSpec confClass = buildConfiguration(appName);
         TypeSpec appClass = buildApp(appName, paramName, packageName);
         TypeSpec repClass = buildRepresentation(representationName, propertyList);
 
-        JavaFile javaFile = JavaFile.builder(packageName, repClass)
+        JavaFile javaFile = JavaFile.builder(packageName, confClass)
                 .build();
 
         javaFile.writeTo(System.out);
     }
 
-    private static TypeSpec buildRepresentation(String representationName, List<ClassProperty> fieldsList) {
-
-        MethodSpec defaultConstructor = MethodSpec.constructorBuilder()
+    private static TypeSpec buildConfiguration(String appName) {
+        return TypeSpec.classBuilder(appName + "Configuration")
                 .addModifiers(Modifier.PUBLIC)
+                .superclass(ClassName.get("io.dropwizard", "Configuration"))
                 .build();
-
-        TypeSpec.Builder builder = TypeSpec.classBuilder(representationName)
-                .addModifiers(Modifier.PUBLIC)
-                .addField(Integer.class, "id", Modifier.PRIVATE)
-                .addMethod(defaultConstructor);
-
-        for (ClassProperty classProperty: fieldsList) {
-            builder.addField(classProperty.buildFieldSpec());
-            builder.addMethod(classProperty.buildGetter());
-        }
-
-        return builder.build();
     }
 
     private static TypeSpec buildApp(String appName, String paramName, String packageName) {
@@ -87,5 +76,24 @@ public class Main {
                 .addMethod(initialize)
                 .addMethod(run)
                 .build();
+    }
+
+    private static TypeSpec buildRepresentation(String representationName, List<ClassProperty> fieldsList) {
+
+        MethodSpec defaultConstructor = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .build();
+
+        TypeSpec.Builder builder = TypeSpec.classBuilder(representationName)
+                .addModifiers(Modifier.PUBLIC)
+                .addField(Integer.class, "id", Modifier.PRIVATE)
+                .addMethod(defaultConstructor);
+
+        for (ClassProperty classProperty: fieldsList) {
+            builder.addField(classProperty.buildFieldSpec());
+            builder.addMethod(classProperty.buildGetter());
+        }
+
+        return builder.build();
     }
 }
