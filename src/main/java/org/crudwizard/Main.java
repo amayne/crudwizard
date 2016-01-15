@@ -1,17 +1,60 @@
 package org.crudwizard;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.*;
+import org.apache.commons.lang3.text.WordUtils;
 
 import javax.lang.model.element.Modifier;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
+        /////////////////////////////////////////////////////////
         String appName = "HelloWorld";
+        String representationName = "Tweet";
         String paramName = "args";
         String packageName = "com.example";
 
+        List<ClassProperty> propertyList = new ArrayList<ClassProperty>();
+        propertyList.add(new ClassProperty("id", Integer.class));
+        propertyList.add(new ClassProperty("content", String.class));
+        propertyList.add(new ClassProperty("yetAnotherProperty", Long.class));
+        propertyList.add(new ClassProperty("again", String[].class));
+        /////////////////////////////////////////////////////////
+
+        TypeSpec appClass = buildApp(appName, paramName, packageName);
+        TypeSpec repClass = buildRepresentation(representationName, propertyList);
+
+        JavaFile javaFile = JavaFile.builder(packageName, repClass)
+                .build();
+
+        javaFile.writeTo(System.out);
+    }
+
+    private static TypeSpec buildRepresentation(String representationName, List<ClassProperty> fieldsList) {
+
+        MethodSpec defaultConstructor = MethodSpec.constructorBuilder()
+                .addModifiers(Modifier.PUBLIC)
+                .build();
+
+        TypeSpec.Builder builder = TypeSpec.classBuilder(representationName)
+                .addModifiers(Modifier.PUBLIC)
+                .addField(Integer.class, "id", Modifier.PRIVATE)
+                .addMethod(defaultConstructor);
+
+        for (ClassProperty classProperty: fieldsList) {
+            builder.addField(classProperty.buildFieldSpec());
+            builder.addMethod(classProperty.buildGetter());
+        }
+
+        return builder.build();
+    }
+
+    private static TypeSpec buildApp(String appName, String paramName, String packageName) {
         MethodSpec main = MethodSpec.methodBuilder("main")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                 .returns(void.class)
@@ -36,7 +79,7 @@ public class Main {
                         ClassName.get(packageName, appName + "Configuration")), "bootstrap")
                 .build();
 
-        TypeSpec appClass = TypeSpec.classBuilder(appName + "Application")
+        return TypeSpec.classBuilder(appName + "Application")
                 .addModifiers(Modifier.PUBLIC)
                 .superclass(ParameterizedTypeName.get(ClassName.get("io.dropwizard", "Application"),
                         ClassName.get(packageName, appName + "Configuration")))
@@ -44,10 +87,5 @@ public class Main {
                 .addMethod(initialize)
                 .addMethod(run)
                 .build();
-
-        JavaFile javaFile = JavaFile.builder(packageName, appClass)
-                .build();
-
-        javaFile.writeTo(System.out);
     }
 }
