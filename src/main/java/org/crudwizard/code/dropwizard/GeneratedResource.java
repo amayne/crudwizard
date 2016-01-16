@@ -7,6 +7,9 @@ import org.crudwizard.code.GeneratedJavaCode;
 import javax.lang.model.element.Modifier;
 import javax.ws.rs.*;
 
+import static com.google.common.base.CaseFormat.LOWER_HYPHEN;
+import static com.google.common.base.CaseFormat.UPPER_CAMEL;
+
 public class GeneratedResource extends GeneratedJavaCode {
     private final String representationName;
     private final String packageName;
@@ -135,7 +138,7 @@ public class GeneratedResource extends GeneratedJavaCode {
 
     private static AnnotationSpec buildPathAnnotation(String endPoint) {
         return AnnotationSpec.builder(Path.class)
-                .addMember("value", "$S", String.format("/%s", endPoint.toLowerCase()))
+                .addMember("value", "$S", String.format("/%s", UPPER_CAMEL.to(LOWER_HYPHEN, endPoint)))
                 .build();
     }
 }

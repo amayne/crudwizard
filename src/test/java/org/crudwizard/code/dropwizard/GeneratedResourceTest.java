@@ -25,7 +25,7 @@ public class GeneratedResourceTest {
                 + "import javax.ws.rs.Produces;\n"
                 + "import javax.ws.rs.core.MediaType;\n"
                 + "\n"
-                + "@Path(\"/helloworld\")\n"
+                + "@Path(\"/hello-world\")\n"
                 + "@Produces(MediaType.APPLICATION_JSON)\n"
                 + "public class HelloWorldResource {\n"
                 + "  @GET\n"
