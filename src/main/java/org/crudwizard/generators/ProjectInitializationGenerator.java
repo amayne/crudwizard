@@ -20,11 +20,12 @@ public class ProjectInitializationGenerator implements Generator {
 
     @Override
     public List<GeneratedFile> generate() {
+        
+        GeneratedGradleFile generatedGradleFile = new GeneratedGradleFile("");
+
         GeneratedApplication generatedApplication = new GeneratedApplication(appName, packageName);
 
         GeneratedConfiguration generatedConfiguration = new GeneratedConfiguration(appName, packageName);
-
-        GeneratedGradleFile generatedGradleFile = new GeneratedGradleFile("");
 
         return ImmutableList.of(generatedGradleFile, generatedApplication, generatedConfiguration);
     }
