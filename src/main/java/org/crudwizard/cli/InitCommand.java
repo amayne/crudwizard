@@ -26,6 +26,9 @@ public class InitCommand {
     @Parameter(names = "-dry", description = "Dry run", required = false)
     private boolean dryRun = false;
 
+    @Parameter(names = "-help", description = "See usages", help = true)
+    private boolean help = false;
+
     public String getAppName() {
         if (applicationNameList.size() != 1) {
             throw new IllegalArgumentException("Please provide one app name");
@@ -50,5 +53,9 @@ public class InitCommand {
             return Collections.emptyList();
         }
         return ImmutableList.copyOf(Splitter.on(",").splitToList(dropwizardLibraries));
+    }
+
+    public boolean isHelp() {
+        return help;
     }
 }

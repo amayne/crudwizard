@@ -24,6 +24,9 @@ public class AddCommand {
     @Parameter(names = "-dry", description = "Dry run", required = false)
     private boolean dryRun = false;
 
+    @Parameter(names = "-help", description = "See usages", help = true)
+    private boolean help = false;
+
     public List<String> getFields() {
         return fields;
     }
@@ -42,5 +45,9 @@ public class AddCommand {
 
     public boolean isDryRun() {
         return dryRun;
+    }
+
+    public boolean isHelp() {
+        return help;
     }
 }

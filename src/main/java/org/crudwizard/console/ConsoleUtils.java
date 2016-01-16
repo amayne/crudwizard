@@ -14,4 +14,8 @@ public class ConsoleUtils {
     public static String white(String message) {
         return (char) 27 + WHITE + message;
     }
+
+    public static String red(String message) {
+        return (char) 27 + RED + message;
+    }
 }
