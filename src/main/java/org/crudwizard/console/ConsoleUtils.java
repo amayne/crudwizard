@@ -10,4 +10,8 @@ public class ConsoleUtils {
     public static String green(String message) {
         return (char) 27 + GREEN + message;
     }
+
+    public static String white(String message) {
+        return (char) 27 + WHITE + message;
+    }
 }

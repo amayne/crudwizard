@@ -21,11 +21,7 @@ public class GeneratedRepresentationTest {
         String returnValue = subject.getContent();
         assertThat(returnValue, equalTo("package com.example;\n"
                 + "\n"
-                + "import java.lang.Integer;\n"
-                + "\n"
                 + "public class Saying {\n"
-                + "  private Integer id;\n"
-                + "\n"
                 + "  public Saying() {\n"
                 + "  }\n"
                 + "}\n"

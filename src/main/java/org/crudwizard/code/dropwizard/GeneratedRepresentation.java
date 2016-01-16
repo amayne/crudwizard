@@ -27,7 +27,6 @@ public class GeneratedRepresentation extends GeneratedJavaCode {
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(representationName)
                 .addModifiers(Modifier.PUBLIC)
-                .addField(Integer.class, "id", Modifier.PRIVATE)
                 .addMethod(defaultConstructor);
 
         for (Field field : fields) {

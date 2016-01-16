@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import java.util.List;
 
 import static org.crudwizard.console.ConsoleUtils.green;
+import static org.crudwizard.console.ConsoleUtils.white;
 
 public class FileManager {
 
@@ -26,6 +27,7 @@ public class FileManager {
 
         for (GeneratedFile file : files) {
             System.out.println(green(MessageFormat.format("+{0}", file.getFile().toString())));
+            System.out.println(white(MessageFormat.format("+{0}", file.getContent())));
             if (!dryRun) {
                 GENERATED_FILE_WRITER.write(file);
             }
