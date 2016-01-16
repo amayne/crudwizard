@@ -20,7 +20,7 @@ public class ProjectInitializationGenerator implements Generator {
 
     @Override
     public List<GeneratedFile> generate() {
-        
+
         GeneratedGradleFile generatedGradleFile = new GeneratedGradleFile("");
 
         GeneratedApplication generatedApplication = new GeneratedApplication(appName, packageName);

@@ -26,7 +26,7 @@ dependencies {
     compile 'com.google.guava:guava:19.0'
     compile 'commons-io:commons-io:2.4'
     compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'com.github.spullara.mustache.java:compiler:0.9.1'
+    compile 'com.github.spullara.mustache.java:compiler:0.8.18'
 
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the

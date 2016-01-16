@@ -6,10 +6,10 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import static java.util.Collections.emptyList;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
@@ -17,7 +17,7 @@ public class GeneratedRepresentationTest {
 
     @Test
     public void testGeneratedCodeNoFields() {
-        GeneratedRepresentation subject = new GeneratedRepresentation("Saying", "com.example", emptyList());
+        GeneratedRepresentation subject = new GeneratedRepresentation("Saying", "com.example", Collections.<Field>emptyList());
         String returnValue = subject.getContent();
         assertThat(returnValue, equalTo("package com.example;\n"
                 + "\n"
@@ -68,7 +68,7 @@ public class GeneratedRepresentationTest {
 
     @Test
     public void testGeneratedWithAllFields() {
-        List<Field> fields = new ArrayList<Field>();
+        List<Field> fields = new ArrayList<>();
         fields.add(new Field("id", Long.class));
         fields.add(new Field("number", Integer.class));
         fields.add(new Field("message", String.class));
