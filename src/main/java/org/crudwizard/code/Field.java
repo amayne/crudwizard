@@ -1,6 +1,6 @@
 package org.crudwizard.code;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import org.apache.commons.lang3.text.WordUtils;
@@ -8,6 +8,9 @@ import org.apache.commons.lang3.text.WordUtils;
 import javax.lang.model.element.Modifier;
 
 public class Field {
+
+    private static final String JACKSON_ANNOTATION_PACKAGE = "com.fasterxml.jackson.annotation";
+
     private final String varName;
     private final Class<?> varType;
 
@@ -30,7 +33,7 @@ public class Field {
 
     public MethodSpec buildGetter() {
         return MethodSpec.methodBuilder("get" + WordUtils.capitalize(varName))
-                .addAnnotation(JsonProperty.class)
+                .addAnnotation(ClassName.get(JACKSON_ANNOTATION_PACKAGE, "JsonProperty"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(varType)
                 .addStatement("return $N", varName)

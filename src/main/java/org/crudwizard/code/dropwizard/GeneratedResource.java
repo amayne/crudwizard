@@ -1,6 +1,5 @@
 package org.crudwizard.code.dropwizard;
 
-import com.codahale.metrics.annotation.Timed;
 import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.MethodSpec;
@@ -11,18 +10,15 @@ import com.squareup.javapoet.TypeSpec;
 import org.crudwizard.code.GeneratedJavaCode;
 
 import javax.lang.model.element.Modifier;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
 
 import static com.google.common.base.CaseFormat.LOWER_HYPHEN;
 import static com.google.common.base.CaseFormat.UPPER_CAMEL;
 
 public class GeneratedResource extends GeneratedJavaCode {
+
+    private static final String REST_PACKAGE_NAME = "javax.ws.rs";
+    private static final String METRICS_PACKAGE_NAME = "com.codahale.metrics.annotation";
+
     private final String representationName;
     private final String packageName;
 
@@ -45,13 +41,13 @@ public class GeneratedResource extends GeneratedJavaCode {
         AnnotationSpec rootPathAnnotation = buildPathAnnotation(representationName);
 
         ClassName mediaType = ClassName.get("javax.ws.rs.core", "MediaType");
-        AnnotationSpec produceAnnotation = AnnotationSpec.builder(Produces.class)
+        AnnotationSpec produceAnnotation = AnnotationSpec.builder(ClassName.get(REST_PACKAGE_NAME, "Produces"))
                 .addMember("value", "$T", mediaType.nestedClass("APPLICATION_JSON"))
                 .build();
 
         MethodSpec index = MethodSpec.methodBuilder("index")
-                .addAnnotation(GET.class)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "GET"))
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(listOfReps)
                 .addStatement("//return Tweet.findAll()")
@@ -60,9 +56,9 @@ public class GeneratedResource extends GeneratedJavaCode {
 
         AnnotationSpec newPathAnnotation = buildPathAnnotation("new");
         MethodSpec newObject = MethodSpec.methodBuilder("newObject")
-                .addAnnotation(GET.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "GET"))
                 .addAnnotation(newPathAnnotation)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(String.class)
                 .addStatement("//return HTML form for creating a new tweet")
@@ -70,22 +66,22 @@ public class GeneratedResource extends GeneratedJavaCode {
                 .build();
 
         MethodSpec create = MethodSpec.methodBuilder("create")
-                .addAnnotation(POST.class)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "POST"))
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(void.class)
                 .addStatement("//save the tweet in the database")
                 .build();
 
         ParameterSpec idParameter = ParameterSpec.builder(Integer.class, "id")
-                .addAnnotation(AnnotationSpec.builder(PathParam.class).addMember("value", "$S", "id").build())
+                .addAnnotation(AnnotationSpec.builder(ClassName.get(REST_PACKAGE_NAME, "PathParam")).addMember("value", "$S", "id").build())
                 .build();
 
         AnnotationSpec showPathAnnotation = buildPathAnnotation("{id}");
         MethodSpec show = MethodSpec.methodBuilder("show")
-                .addAnnotation(GET.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "GET"))
                 .addAnnotation(showPathAnnotation)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(idParameter)
                 .returns(className)
@@ -95,9 +91,9 @@ public class GeneratedResource extends GeneratedJavaCode {
 
         AnnotationSpec editPathAnnotation = buildPathAnnotation("{id}/edit");
         MethodSpec edit = MethodSpec.methodBuilder("edit")
-                .addAnnotation(GET.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "GET"))
                 .addAnnotation(editPathAnnotation)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(idParameter)
                 .returns(String.class)
@@ -107,9 +103,9 @@ public class GeneratedResource extends GeneratedJavaCode {
 
         AnnotationSpec putPathAnnotation = buildPathAnnotation("{id}");
         MethodSpec put = MethodSpec.methodBuilder("put")
-                .addAnnotation(PUT.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "PUT"))
                 .addAnnotation(putPathAnnotation)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(idParameter)
                 .returns(className)
@@ -119,9 +115,9 @@ public class GeneratedResource extends GeneratedJavaCode {
 
         AnnotationSpec deletePathAnnotation = buildPathAnnotation("{id}");
         MethodSpec delete = MethodSpec.methodBuilder("destroy")
-                .addAnnotation(DELETE.class)
+                .addAnnotation(ClassName.get(REST_PACKAGE_NAME, "DELETE"))
                 .addAnnotation(deletePathAnnotation)
-                .addAnnotation(Timed.class)
+                .addAnnotation(ClassName.get(METRICS_PACKAGE_NAME, "Timed"))
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(idParameter)
                 .returns(void.class)
@@ -149,7 +145,7 @@ public class GeneratedResource extends GeneratedJavaCode {
 
 
     private static AnnotationSpec buildPathAnnotation(String endPoint) {
-        return AnnotationSpec.builder(Path.class)
+        return AnnotationSpec.builder(ClassName.get(REST_PACKAGE_NAME, "Path"))
                 .addMember("value", "$S", String.format("/%s", UPPER_CAMEL.to(LOWER_HYPHEN, endPoint)))
                 .build();
     }
