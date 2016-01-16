@@ -3,6 +3,8 @@ package org.crudwizard;
 import com.beust.jcommander.JCommander;
 import org.crudwizard.cli.AddCommand;
 import org.crudwizard.cli.InitCommand;
+import org.crudwizard.generators.ProjectInitializationGenerator;
+import org.crudwizard.writer.FileManager;
 
 import java.util.List;
 
@@ -23,9 +25,10 @@ public class CrudWizardApp {
         }
         for (Object command : commands) {
             if (command instanceof AddCommand) {
-
             } else if (command instanceof InitCommand) {
-
+                InitCommand initCommand = (InitCommand) command;
+                ProjectInitializationGenerator generator = new ProjectInitializationGenerator(initCommand.getAppName(), initCommand.getPackageName());
+                new FileManager(generator, initCommand.isDryRun()).write();
             }
         }
     }

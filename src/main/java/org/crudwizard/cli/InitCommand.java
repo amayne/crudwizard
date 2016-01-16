@@ -17,6 +17,9 @@ public class InitCommand {
     @Parameter(names = "-idea", description = "Enable IntelliJ support", required = false)
     private boolean intellijIdea = false;
 
+    @Parameter(names = "-dry", description = "Dry run", required = false)
+    private boolean dryRun = false;
+
     public String getAppName() {
         if (applicationNameList.size() != 1) {
             throw new IllegalArgumentException("Please provide one app name");
@@ -30,5 +33,9 @@ public class InitCommand {
 
     public boolean isIntellijIdea() {
         return intellijIdea;
+    }
+
+    public boolean isDryRun() {
+        return dryRun;
     }
 }

@@ -19,14 +19,6 @@ public abstract class GeneratedJavaCode extends GeneratedFile {
         this.className = className;
     }
 
-    public String getPackageName() {
-        return packageName;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
     @Override
     public File getFile() {
         String codePath = Joiner.on("/").join(Splitter.on(".").split(packageName));
@@ -36,6 +28,14 @@ public abstract class GeneratedJavaCode extends GeneratedFile {
     @Override
     public String getContent() {
         return buildJavaFile(packageName);
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public String getClassName() {
+        return className;
     }
 
     private String getFileName() {
