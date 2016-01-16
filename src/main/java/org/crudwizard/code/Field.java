@@ -1,4 +1,4 @@
-package org.crudwizard;
+package org.crudwizard.code;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.squareup.javapoet.FieldSpec;
@@ -7,11 +7,11 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import javax.lang.model.element.Modifier;
 
-public class ClassProperty<T> {
+public class Field<T> {
     private final String varName;
     private final Class<T> varType;
 
-    public ClassProperty(String varName, Class<T> varType) {
+    public Field(String varName, Class<T> varType) {
         this.varName = varName;
         this.varType = varType;
     }
@@ -29,7 +29,7 @@ public class ClassProperty<T> {
     }
 
     public MethodSpec buildGetter() {
-        return MethodSpec.methodBuilder("get"+ WordUtils.capitalize(varName))
+        return MethodSpec.methodBuilder("get" + WordUtils.capitalize(varName))
                 .addAnnotation(JsonProperty.class)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(varType)

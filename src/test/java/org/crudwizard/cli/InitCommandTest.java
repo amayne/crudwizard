@@ -17,7 +17,7 @@ public class InitCommandTest extends JCommanderTest {
 
     @Test
     public void testParsesAppName() {
-        String[] args = {"init", "Sample"};
+        String[] args = {"init", "Sample", "-p", "com.example"};
 
         InitCommand subject = new InitCommand();
         JCommander jCommander = buildAndParse(args, subject);
@@ -25,21 +25,9 @@ public class InitCommandTest extends JCommanderTest {
         assertThat(jCommander.getParsedCommand(), equalTo("init"));
         assertThat(subject.getAppName(), equalTo("Sample"));
     }
-
-    @Test
-    public void testReadsPackage() {
-        String[] args = {"init", "Sample", "-p", "com.example"};
-
-        InitCommand subject = new InitCommand();
-        JCommander jCommander = buildAndParse(args, subject);
-
-        assertThat(jCommander.getParsedCommand(), equalTo("init"));
-        assertThat(subject.getPackageName(), equalTo("com.example"));
-    }
-
     @Test
     public void testEnablesIdea() {
-        String[] args = {"init", "Sample", "-idea"};
+        String[] args = {"init", "Sample", "-idea", "-p", "com.example"};
 
         InitCommand subject = new InitCommand();
         JCommander jCommander = buildAndParse(args, subject);
@@ -53,7 +41,7 @@ public class InitCommandTest extends JCommanderTest {
         expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Please provide one app name");
 
-        String[] args = {"init", "Sample", "Sample2"};
+        String[] args = {"init", "Sample", "Sample2", "-p", "com.example"};
 
         InitCommand subject = new InitCommand();
 
