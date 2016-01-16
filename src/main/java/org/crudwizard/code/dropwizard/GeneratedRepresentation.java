@@ -37,4 +37,8 @@ public class GeneratedRepresentation extends GeneratedJavaCode {
 
         return builder.build();
     }
+
+    public List<Field> getFields() {
+        return fields;
+    }
 }

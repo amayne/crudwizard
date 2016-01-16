@@ -21,6 +21,9 @@ public class AddCommand {
     @Parameter(names = "-r", description = "Whether the model is modifiable", required = false)
     private boolean readOnly = false;
 
+    @Parameter(names = "-dry", description = "Dry run", required = false)
+    private boolean dryRun = false;
+
     public List<String> getFields() {
         return fields;
     }
@@ -35,5 +38,9 @@ public class AddCommand {
 
     public boolean isReadOnly() {
         return readOnly;
+    }
+
+    public boolean isDryRun() {
+        return dryRun;
     }
 }
