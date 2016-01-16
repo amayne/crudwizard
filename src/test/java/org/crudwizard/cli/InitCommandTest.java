@@ -7,6 +7,7 @@ import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 public class InitCommandTest extends JCommanderTest {
 
@@ -33,7 +34,18 @@ public class InitCommandTest extends JCommanderTest {
         JCommander jCommander = buildAndParse(args, subject);
 
         assertThat(jCommander.getParsedCommand(), equalTo("init"));
-        assertThat(subject.getPackage(), equalTo("com.example"));
+        assertThat(subject.getPackageName(), equalTo("com.example"));
+    }
+
+    @Test
+    public void testEnablesIdea() {
+        String[] args = {"init", "Sample", "-idea"};
+
+        InitCommand subject = new InitCommand();
+        JCommander jCommander = buildAndParse(args, subject);
+
+        assertThat(jCommander.getParsedCommand(), equalTo("init"));
+        assertTrue(subject.isIntellijIdea());
     }
 
     @Test

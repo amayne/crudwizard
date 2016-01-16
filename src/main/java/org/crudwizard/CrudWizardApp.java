@@ -1,12 +1,12 @@
 package org.crudwizard;
 
 import com.beust.jcommander.JCommander;
-import com.google.common.collect.ImmutableMap;
+import org.crudwizard.cli.AddCommand;
 import org.crudwizard.cli.InitCommand;
 
-public class CrudWizardApp {
+import java.util.List;
 
-    private static final ImmutableMap<String, Object> COMMAND_MAP = ImmutableMap.of("init", new InitCommand());
+public class CrudWizardApp {
 
     private final JCommander jCommander;
 
@@ -16,21 +16,24 @@ public class CrudWizardApp {
 
     private void run(String[] args) {
         jCommander.parse(args);
-        String command = jCommander.getParsedCommand();
-        switch(command) {
-            case "init":
+        String parsedCommand = jCommander.getParsedCommand();
+        List<Object> commands = jCommander.getCommands().get(parsedCommand).getObjects();
+        if (commands.isEmpty()) {
+            throw new IllegalArgumentException("No recognized command");
+        }
+        for (Object command : commands) {
+            if (command instanceof AddCommand) {
 
-                break;
-            default:
-                System.out.println("Unknown command");
+            } else if (command instanceof InitCommand) {
+
+            }
         }
     }
 
     private JCommander buildJCommander() {
         JCommander jCommander = new JCommander();
-        for (String command : COMMAND_MAP.keySet()) {
-            jCommander.addCommand(command, COMMAND_MAP.get(command));
-        }
+        jCommander.addCommand(new InitCommand());
+        jCommander.addCommand(new AddCommand());
         return jCommander;
     }
 

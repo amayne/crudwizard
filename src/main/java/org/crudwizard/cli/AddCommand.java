@@ -9,29 +9,28 @@ import java.util.List;
 @Parameters(commandNames = {"add", "new"}, commandDescription = "Add a new model")
 public class AddCommand {
 
-    @Parameter(description = "", required = false)
-    private List<String> parameters = new ArrayList<>();
+    @Parameter(description = "The model fields, e.g. id:int message:string", required = false)
+    private List<String> fields = new ArrayList<>();
+
+    @Parameter(names = {"-model", "-m"}, description = "Name of the model", required = true)
+    private String modelName;
 
     @Parameter(names = "-p", description = "Package", required = false)
     private String packageName;
 
-    @Parameter(names = "-r", description = "Read Only", required = false)
+    @Parameter(names = "-r", description = "Whether the model is modifiable", required = false)
     private boolean readOnly = false;
 
-
-    public List<String> getParameters() {
-        return parameters;
+    public List<String> getFields() {
+        return fields;
     }
 
     public String getPackageName() {
         return packageName;
     }
 
-    public String getModel() {
-        if (parameters.size() != 1) {
-            throw new IllegalArgumentException("Please provide a model name");
-        }
-        return parameters.get(0);
+    public String getModelName() {
+        return modelName;
     }
 
     public boolean isReadOnly() {
