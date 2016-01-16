@@ -6,6 +6,7 @@ import org.crudwizard.code.dropwizard.GeneratedConfiguration;
 import org.crudwizard.code.project.GeneratedGradleFile;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -16,7 +17,8 @@ public class ProjectInitializationGeneratorTest {
 
     @Test
     public void testGeneratesFiles() {
-        ProjectInitializationGenerator subject = new ProjectInitializationGenerator("HelloWorld", "com.example");
+        ProjectInitializationGenerator subject =
+                new ProjectInitializationGenerator("HelloWorld", "com.example", Collections.<String>emptyList());
         List<GeneratedFile> returnValue = subject.generate();
 
         assertThat(returnValue.size(), equalTo(3));

@@ -28,7 +28,8 @@ public class CrudWizardApp {
             if (command instanceof AddCommand) {
             } else if (command instanceof InitCommand) {
                 InitCommand initCommand = (InitCommand) command;
-                ProjectInitializationGenerator generator = new ProjectInitializationGenerator(initCommand.getAppName(), initCommand.getPackageName());
+                ProjectInitializationGenerator generator =
+                        new ProjectInitializationGenerator(initCommand.getAppName(), initCommand.getPackageName(), initCommand.getDropwizardLibraries());
                 new FileManager(generator, initCommand.isDryRun()).write();
             }
         }

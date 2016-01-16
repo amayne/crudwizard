@@ -2,7 +2,10 @@ package org.crudwizard.cli;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
 
+import java.util.Collections;
 import java.util.List;
 
 @Parameters(commandNames = {"init", "initialize"}, commandDescription = "Initialize a Dropwizard skeleton")
@@ -13,6 +16,9 @@ public class InitCommand {
 
     @Parameter(names = "-p", description = "Package", required = true)
     private String packageName;
+
+    @Parameter(names = "-dw", description = "Add dropwizard libraries, comma separted, e.g. testing,jdbi,assets,views", required = false)
+    private String dropwizardLibraries;
 
     @Parameter(names = "-idea", description = "Enable IntelliJ support", required = false)
     private boolean intellijIdea = false;
@@ -37,5 +43,12 @@ public class InitCommand {
 
     public boolean isDryRun() {
         return dryRun;
+    }
+
+    public List<String> getDropwizardLibraries() {
+        if (dropwizardLibraries == null || dropwizardLibraries.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return ImmutableList.copyOf(Splitter.on(",").splitToList(dropwizardLibraries));
     }
 }

@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -24,6 +25,17 @@ public class InitCommandTest extends JCommanderTest {
 
         assertThat(jCommander.getParsedCommand(), equalTo("init"));
         assertThat(subject.getAppName(), equalTo("Sample"));
+    }
+
+    @Test
+    public void testParsesDropwizardLibraries() {
+        String[] args = {"init", "Sample", "-p", "com.example", "-dw", "testing,views"};
+
+        InitCommand subject = new InitCommand();
+        JCommander jCommander = buildAndParse(args, subject);
+
+        assertThat(jCommander.getParsedCommand(), equalTo("init"));
+        assertThat(subject.getDropwizardLibraries(), hasItems("testing", "views"));
     }
 
     @Test
