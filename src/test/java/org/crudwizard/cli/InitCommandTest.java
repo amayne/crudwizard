@@ -25,6 +25,7 @@ public class InitCommandTest extends JCommanderTest {
         assertThat(jCommander.getParsedCommand(), equalTo("init"));
         assertThat(subject.getAppName(), equalTo("Sample"));
     }
+
     @Test
     public void testEnablesIdea() {
         String[] args = {"init", "Sample", "-idea", "-p", "com.example"};

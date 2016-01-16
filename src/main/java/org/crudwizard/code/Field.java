@@ -7,11 +7,11 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import javax.lang.model.element.Modifier;
 
-public class Field<T> {
+public class Field {
     private final String varName;
-    private final Class<T> varType;
+    private final Class<?> varType;
 
-    public Field(String varName, Class<T> varType) {
+    public Field(String varName, Class<?> varType) {
         this.varName = varName;
         this.varType = varType;
     }
@@ -20,7 +20,7 @@ public class Field<T> {
         return varName;
     }
 
-    public Class<T> getVarType() {
+    public Class<?> getVarType() {
         return varType;
     }
 
