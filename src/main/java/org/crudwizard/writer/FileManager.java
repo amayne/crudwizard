@@ -4,7 +4,10 @@ import org.crudwizard.code.GeneratedFile;
 import org.crudwizard.generators.Generator;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.List;
+
+import static org.crudwizard.console.ConsoleUtils.green;
 
 public class FileManager {
 
@@ -18,15 +21,13 @@ public class FileManager {
         this.dryRun = dryRun;
     }
 
-    public void write() {
+    public void write() throws IOException {
         List<GeneratedFile> files = generator.generate();
 
         for (GeneratedFile file : files) {
-            System.out.println(file.getFile().toString());
-            try {
-                System.out.println(file.getContent());
-            } catch (IOException e) {
-                e.printStackTrace();
+            System.out.println(green(MessageFormat.format("+{0}", file.getFile().toString())));
+            if (!dryRun) {
+                GENERATED_FILE_WRITER.write(file);
             }
         }
     }

@@ -6,6 +6,7 @@ import org.crudwizard.cli.InitCommand;
 import org.crudwizard.generators.ProjectInitializationGenerator;
 import org.crudwizard.writer.FileManager;
 
+import java.io.IOException;
 import java.util.List;
 
 public class CrudWizardApp {
@@ -16,7 +17,7 @@ public class CrudWizardApp {
         this.jCommander = buildJCommander();
     }
 
-    private void run(String[] args) {
+    private void run(String[] args) throws IOException {
         jCommander.parse(args);
         String parsedCommand = jCommander.getParsedCommand();
         List<Object> commands = jCommander.getCommands().get(parsedCommand).getObjects();
@@ -41,7 +42,7 @@ public class CrudWizardApp {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         CrudWizardApp crudWizardApp = new CrudWizardApp();
         crudWizardApp.run(args);
     }
